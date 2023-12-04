@@ -89,7 +89,7 @@ disableThemeInject = false
     # URL of the LOGO
     logo = "/fixit.min.svg"
     # title name
-    name = "老季随笔"
+    name = "老季笔记"
     # you can add extra information before the name (HTML format is supported), such as icons
     pre = ""
     # you can add extra information after the name (HTML format is supported), such as icons

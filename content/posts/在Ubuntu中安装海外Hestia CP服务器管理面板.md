@@ -50,7 +50,7 @@ code:
     wget https://raw.githubusercontent.com/hestiacp/hestiacp/release/install/hst-install.sh
     
     #如果国内服务器无法下载的话,也可以用我提供的镜像来下载
-    wget https://cn-hcp.253344.xyz/hestiacp/hestiacp/release/install/hst-install.sh
+    wget https://mirror.jiyanjiyu.com/hestiacp/hestiacp/release/install/hst-install.sh
     #这里的命令用官方提供的安装参数生成页面来生成
     bash hst-install.sh --port 2083 --apache no --named no --mysql no --mysql8 yes --exim no --dovecot no --clamav no --spamassassin no --iptables no --fail2ban no --api no --interactive no
     ```
@@ -99,4 +99,25 @@ code:
    ```
 然后你可以访问上面的面板地址来管理服务器了.
 如果无法访问.你可能还需要在VPS后台打开 80 443 8023(HCP默认管理端口)或者自定的端口.
+
+{{< admonition tip "Cloudflare" >}}
+如果你的域名是用Cloudflare来解析的,那么你需要将Hestia CP的管理端口进行变更,因为CF并不允许使用8083端口。
+  ```bash
+  sudo su -
+  v-change-sys-port 2083
+  ```
+使用 Cloudflare 源服务器SSL 可以获得长达 15 年有效期的证书，而且在相当长的一段时间内不需要担心更新证书
+
+你可以按照以下方式将 Cloudflare 证书授权添加到你的服务器
+```bash
+sudo su -
+wget https://developers.cloudflare.com/ssl/static/origin_ca_rsa_root.pem
+mv origin_ca_rsa_root.pem origin_ca_rsa_root.crt
+cp origin_ca_rsa_root.crt /usr/local/share/ca-certificates
+update-ca-certificates
+```
+
+{{< /admonition >}}
+
+
 <!--more-->

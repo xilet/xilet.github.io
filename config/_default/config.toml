@@ -3,7 +3,7 @@
 # See: https://gohugo.io/getting-started/configuration/
 # -------------------------------------------------------------------------------------
 
-title = "老季随笔"
+title = "老季笔记"
 baseURL = "https://jiyanjiyu.com/"
 theme = "FixIt"
 defaultContentLanguage = "zh-cn"
