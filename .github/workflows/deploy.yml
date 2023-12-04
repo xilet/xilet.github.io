@@ -34,7 +34,7 @@ jobs:
         run: hugo -v --gc --minify
 
       - name: Setup Custom Domain
-        run: echo 'blog.253344.xyz' > public/CNAME
+        run: echo 'blog.jiyanjiyu.com' > public/CNAME
 
       - name: Deploy to Github Pages
         uses: JamesIves/github-pages-deploy-action@v4

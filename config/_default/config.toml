@@ -3,8 +3,8 @@
 # See: https://gohugo.io/getting-started/configuration/
 # -------------------------------------------------------------------------------------
 
-title = "新安江的博客"
-baseURL = "http://example.org/"
+title = "老季随笔"
+baseURL = "https://jiyanjiyu.com/"
 theme = "FixIt"
 defaultContentLanguage = "zh-cn"
 languageCode = "zh-CN"
