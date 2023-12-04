@@ -13,39 +13,90 @@ code:
 # See details front matter: https://fixit.lruihao.cn/documentation/content-management/introduction/#front-matter
 ---
 
-```bash
+# 准备工作
+- 一台VPS  
+- 任意 SSH 终端软件 [XShell](https://www.xshell.com/zh/free-for-home-school/) 、 [免费国产FinalShell](http://www.hostbuf.com/t/988.html)、[git-windows](https://git-scm.com/)
+- 最好再有一个域名
 
-apt-get update
-apt-get upgrade
+# 配置以及安装
+- 首先通过SSH链接到远程主机
+    ```bash
+    #更新系统
+    apt-get update
+    #如弹出选择框按需要选择然后回车
+    apt-get upgrade
+    ```
+- 关闭所有iptables规则,非必须.在我的oracle免费主机上需要执行该脚本
+    ```bash
+    sudo iptables -P INPUT ACCEPT
+    sudo iptables -P FORWARD ACCEPT
+    sudo iptables -P OUTPUT ACCEPT
+    sudo iptables -F
+    sudo iptables -X
+    sudo iptables -t nat -F
+    sudo iptables -t nat -X
+    sudo iptables -t mangle -F
+    sudo iptables -t mangle -X
+    sudo iptables -t raw -F
+    sudo iptables -t raw -X
+    sudo iptables -t security -F
+    sudo iptables -t security -X
+    sudo iptables-save | sudo tee /etc/iptables/rules.v4
+    ```
 
+- 访问[Hestia CP 安装参数生成页面](https://hestiacp.com/install.html)
 
+    ```bash
+    wget https://raw.githubusercontent.com/hestiacp/hestiacp/release/install/hst-install.sh
+    
+    #如果国内服务器无法下载的话,也可以用我提供的镜像来下载
+    wget https://cn-hcp.253344.xyz/hestiacp/hestiacp/release/install/hst-install.sh
+    #这里的命令用官方提供的安装参数生成页面来生成
+    bash hst-install.sh --port 2083 --apache no --named no --mysql no --mysql8 yes --exim no --dovecot no --clamav no --spamassassin no --iptables no --fail2ban no --api no --interactive no
+    ```
+    安装完成后有以下提示
+    ```bash
+    Please install an MTA on this system if you want to use sendmail!
 
+    Congratulations!
+    
+    You have successfully installed Hestia Control Panel on your server.
+    
+    Ready to get started? Log in using the following credentials:
+    
+            Admin URL:  https://<your host name>:<your port>
+            Backup URL: https://<your host ip>:<your port>
+            Username:   admin
+            Password:   The password you chose during installation.
+    
+    Thank you for choosing Hestia Control Panel to power your full stack web server,
+    we hope that you enjoy using it as much as we do!
+    
+    Please feel free to contact us at any time if you have any questions,
+    or if you encounter any bugs or problems:
+    
+    Documentation:  https://docs.hestiacp.com/
+    Forum:          https://forum.hestiacp.com/
+    GitHub:         https://www.github.com/hestiacp/hestiacp
+    
+    Note: Automatic updates are enabled by default. If you would like to disable them,
+    please log in and navigate to Server > Updates to turn them off.
+    
+    Help support the Hestia Control Panel project by donating via PayPal:
+    https://www.hestiacp.com/donate
+    
+    --
+    Sincerely yours,
+    The Hestia Control Panel development team
+    
+    Made with love & pride by the open-source community around the world.
+    [ ! ] IMPORTANT: You must restart the system before continuing!
+    ```
 
-sudo iptables -P INPUT ACCEPT
-sudo iptables -P FORWARD ACCEPT
-sudo iptables -P OUTPUT ACCEPT
-sudo iptables -F
-sudo iptables -X
-sudo iptables -t nat -F
-sudo iptables -t nat -X
-sudo iptables -t mangle -F
-sudo iptables -t mangle -X
-sudo iptables -t raw -F
-sudo iptables -t raw -X
-sudo iptables -t security -F
-sudo iptables -t security -X
-sudo iptables-save | sudo tee /etc/iptables/rules.v4
-
-#国内VPS可能无法访问 raw.githubusercontent.com 配置代理用于下载安装脚本
-export http_proxy=http://user:pass@xxx.xxx.xxx.xxx:port
-export https_proxy=http://user:pass@xxx.xxx.xxx.xxx:port
-```
-
-访问[Hestia CP 安装参数生成页面](https://hestiacp.com/install.html)
-
-```bash
-wget https://raw.githubusercontent.com/hestiacp/hestiacp/release/install/hst-install.sh
-#这里的命令可以用官方提供的安装参数生成页面来生成
-bash hst-install.sh --port 2083 --apache no --named no --mysql no --mysql8 yes --exim no --dovecot no --clamav no --spamassassin no --iptables no --fail2ban no --api no --interactive no
-```
+- 重启服务器
+  ```bash
+  reboot
+   ```
+然后你可以访问上面的面板地址来管理服务器了.
+如果无法访问.你可能还需要在VPS后台打开 80 443 8023(HCP默认管理端口)或者自定的端口.
 <!--more-->
