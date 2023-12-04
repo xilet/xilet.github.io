@@ -1,6 +1,6 @@
 ---
-title: Hello World
-date: 2022-09-29T17:06:11+08:00
+title: WebStack-Hugo搭建导航站点
+date: 2023-12-01T16:18:11+08:00
 tags:
 - hugo
 - WebStack
