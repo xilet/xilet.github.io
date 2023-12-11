@@ -14,7 +14,7 @@ code:
 ---
 
 # 准备工作
-- 一台VPS  
+- 一台VPS  如果没有的话可以购买 [InterServer](https://www.interserver.net/r/938272)
 - 任意 SSH 终端软件 [XShell](https://www.xshell.com/zh/free-for-home-school/) 、 [免费国产FinalShell](http://www.hostbuf.com/t/988.html)、[git-windows](https://git-scm.com/)
 - 最好再有一个域名
 

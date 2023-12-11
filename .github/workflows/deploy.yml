@@ -33,8 +33,8 @@ jobs:
       - name: Build
         run: hugo -v --gc --minify
 
-      - name: Setup Custom Domain
-        run: echo 'blog.jiyanjiyu.com' > public/CNAME
+      #- name: Setup Custom Domain
+      #  run: echo 'blog.jiyanjiyu.com' > public/CNAME
 
       - name: Deploy to Github Pages
         uses: JamesIves/github-pages-deploy-action@v4
