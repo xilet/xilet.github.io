@@ -1,0 +1,59 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Git - 标签 - 老季笔记</title><link>https://jiyanjiyu.com/tags/git/</link><description>Git - 标签 | 老季笔记</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 13 Dec 2023 22:41:11 +0800</lastBuildDate><atom:link href="https://jiyanjiyu.com/tags/git/" rel="self" type="application/rss+xml"/><item><title>在CentOS 8 vps中搭建nodejs环境</title><link>https://jiyanjiyu.com/posts/%E5%9C%A8centos-8-vps%E4%B8%AD%E6%90%AD%E5%BB%BAnodejs%E7%8E%AF%E5%A2%83/</link><pubDate>Wed, 13 Dec 2023 22:41:11 +0800</pubDate><author>作者</author><guid>https://jiyanjiyu.com/posts/%E5%9C%A8centos-8-vps%E4%B8%AD%E6%90%AD%E5%BB%BAnodejs%E7%8E%AF%E5%A2%83/</guid><description><![CDATA[<h1 id="准备工作" class="heading-element"><span>准备工作</span>
+  <a href="#%e5%87%86%e5%a4%87%e5%b7%a5%e4%bd%9c" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><ul>
+<li>一台VPS  如果没有的话可以购买 <a href="https://www.interserver.net/r/938272"target="_blank" rel="external nofollow noopener noreferrer">InterServer</a></li>
+<li>任意 SSH 终端软件 <a href="https://www.xshell.com/zh/free-for-home-school/"target="_blank" rel="external nofollow noopener noreferrer">XShell</a> 、 <a href="http://www.hostbuf.com/t/988.html"target="_blank" rel="external nofollow noopener noreferrer">免费国产FinalShell</a>、<a href="https://git-scm.com/"target="_blank" rel="external nofollow noopener noreferrer">git-windows</a></li>
+<li>最好再有一个域名</li>
+</ul>
+<h1 id="配置以及安装" class="heading-element"><span>配置以及安装</span>
+  <a href="#%e9%85%8d%e7%bd%ae%e4%bb%a5%e5%8f%8a%e5%ae%89%e8%a3%85" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><ul>
+<li>首先通过SSH链接到远程主机
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#首先导入 NodeSource 仓库</span>
+</span></span><span class="line"><span class="cl">curl -fsSL https://rpm.nodesource.com/setup_20.x <span class="p">|</span> sudo bash -
+</span></span><span class="line"><span class="cl"><span class="c1">#更新系统</span>
+</span></span><span class="line"><span class="cl">sudo dnf update
+</span></span><span class="line"><span class="cl"><span class="c1">#安装需要的工具</span>
+</span></span><span class="line"><span class="cl">sudo dnf install git
+</span></span><span class="line"><span class="cl">sudo dnf install vim
+</span></span><span class="line"><span class="cl">sudo dnf install nodejs
+</span></span><span class="line"><span class="cl">npm install -g pnpm
+</span></span><span class="line"><span class="cl">npm install -g npm@10.2.5</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>开放防火墙端口
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo firewall-cmd --zone<span class="o">=</span>public --add-port<span class="o">=</span>8067/tcp --permanent
+</span></span><span class="line"><span class="cl">sudo firewall-cmd --zone<span class="o">=</span>public --add-port<span class="o">=</span>80/tcp --permanent
+</span></span><span class="line"><span class="cl">sudo firewall-cmd --zone<span class="o">=</span>public --add-port<span class="o">=</span>443/tcp --permanent
+</span></span><span class="line"><span class="cl">sudo firewall-cmd --reload
+</span></span><span class="line"><span class="cl">sudo firewall-cmd --list-ports</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>]]></description></item></channel></rss>
