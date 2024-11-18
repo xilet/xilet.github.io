@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Node.js - 标签 - 老季笔记</title><link>https://jiyanjiyu.com/tags/node.js/</link><description>This is my new Hugo FixIt site</description><generator>Hugo 0.138.0 &amp; FixIt v0.3.15</generator><language>zh-CN</language><lastBuildDate>Mon, 18 Nov 2024 01:05:32 +0000</lastBuildDate><atom:link href="https://jiyanjiyu.com/tags/node.js/index.xml" rel="self" type="application/rss+xml"/><item><title>在CentOS 8 vps中搭建nodejs环境</title><link>https://jiyanjiyu.com/posts/%E5%9C%A8centos-8-vps%E4%B8%AD%E6%90%AD%E5%BB%BAnodejs%E7%8E%AF%E5%A2%83/</link><pubDate>Wed, 13 Dec 2023 22:41:11 +0800</pubDate><guid>https://jiyanjiyu.com/posts/%E5%9C%A8centos-8-vps%E4%B8%AD%E6%90%AD%E5%BB%BAnodejs%E7%8E%AF%E5%A2%83/</guid><category domain="https://jiyanjiyu.com/categories/tutorial/">Tutorial</category><description>&lt;h2 id="准备工作" class="heading-element">&lt;span>准备工作&lt;/span>
+ &lt;a href="#%e5%87%86%e5%a4%87%e5%b7%a5%e4%bd%9c" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h2>&lt;ul>
+&lt;li>一台VPS 如果没有的话可以购买 &lt;a href="https://www.interserver.net/r/938272"target="_blank" rel="external nofollow noopener noreferrer">InterServer&lt;/a>&lt;/li>
+&lt;li>任意 SSH 终端软件 &lt;a href="https://www.xshell.com/zh/free-for-home-school/"target="_blank" rel="external nofollow noopener noreferrer">XShell&lt;/a> 、 &lt;a href="http://www.hostbuf.com/t/988.html"target="_blank" rel="external nofollow noopener noreferrer">免费国产FinalShell&lt;/a>、&lt;a href="https://git-scm.com/"target="_blank" rel="external nofollow noopener noreferrer">git-windows&lt;/a>&lt;/li>
+&lt;li>最好再有一个域名&lt;/li>
+&lt;/ul>
+&lt;h2 id="配置以及安装" class="heading-element">&lt;span>配置以及安装&lt;/span>
+ &lt;a href="#%e9%85%8d%e7%bd%ae%e4%bb%a5%e5%8f%8a%e5%ae%89%e8%a3%85" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h2>&lt;ul>
+&lt;li>首先通过SSH链接到远程主机
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#首先导入 NodeSource 仓库&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">curl -fsSL https://rpm.nodesource.com/setup_20.x &lt;span class="p">|&lt;/span> sudo bash -
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#更新系统&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo dnf update
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#安装需要的工具&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo dnf install git
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo dnf install vim
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo dnf install nodejs
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">npm install -g pnpm
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">npm install -g npm@10.2.5&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;li>开放防火墙端口
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo firewall-cmd --zone&lt;span class="o">=&lt;/span>public --add-port&lt;span class="o">=&lt;/span>8067/tcp --permanent
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo firewall-cmd --zone&lt;span class="o">=&lt;/span>public --add-port&lt;span class="o">=&lt;/span>80/tcp --permanent
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo firewall-cmd --zone&lt;span class="o">=&lt;/span>public --add-port&lt;span class="o">=&lt;/span>443/tcp --permanent
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo firewall-cmd --reload
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo firewall-cmd --list-ports&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;/ul></description></item></channel></rss>
